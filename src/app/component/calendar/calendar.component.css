@@ -26,6 +26,7 @@
 
 .meeting {
   position: absolute;
+  border-radius: 15px;
   width: 100%;
   background: plum;
   display: flex;
@@ -35,6 +36,7 @@
 
 .today {
   width: 100%;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   place-items: center;
