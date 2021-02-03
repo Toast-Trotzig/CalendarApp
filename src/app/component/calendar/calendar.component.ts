@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {IDay, IMeeting, ITimestamp} from '../Models/model';
-import {formatDate} from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-calendar',
@@ -18,15 +18,17 @@ export class CalendarComponent implements OnInit {
   meeting: IMeeting = {name: null, multiplier: null};
 
   tempday: IDay = {date: null, timestamp: []};
+  today: Date = new Date();
 
 
 
-  constructor() { }
+  constructor(public datepipe: DatePipe) { }
 
 
   ngOnInit(): void {
     const today = new Date();
     this.tempday.date = today;
+    console.log(today);
     const fday = today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1);
     const date = new Date(today.setDate(fday));
     const testmeeting = Object.assign({}, this.meeting);
