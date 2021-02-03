@@ -22,7 +22,7 @@
   flex-direction: column;
   box-sizing: border-box;
   width: 100%;
-  outline:1px solid grey;
+  outline:1px solid lightgray;
 }
 
 .meeting {
@@ -30,7 +30,6 @@
   width: 100%;
   height: calc(100%*2);
   background: plum;
-  opacity: 90%;
   display: flex;
   align-content: center;
   place-content: center;

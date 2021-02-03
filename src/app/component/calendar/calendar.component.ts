@@ -29,20 +29,19 @@ export class CalendarComponent implements OnInit {
     this.tempday.date = today;
     const fday = today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1);
     const date = new Date(today.setDate(fday));
-    console.log(date);
     const testmeeting = Object.assign({}, this.meeting);
     testmeeting.name = 'test';
     testmeeting.multiplier = 2;
 
     for (let i = 0; i < 8; i++) {
-      const tmp = Object.assign([], this.timestamps);
+      const tmp = JSON.parse(JSON.stringify(this.timestamps));
       const temp = Object.assign({}, this.tempday);
-      console.log(tmp);
       temp.timestamp = tmp;
-      this.days.push(temp);
       temp.date = new Date(temp.date.setDate(date.getDate() + i));
-      console.log(temp.date);
+      this.days.push(temp);
     }
+
+    console.log(this.timestamps);
     this.days[2].timestamp[8].meeting = testmeeting;
     console.log(this.days);
   }

@@ -6,7 +6,7 @@
     <div *ngFor="let temp of day.timestamp" class="blocks">
       <p>{{temp.time}}</p>
       <div *ngIf="temp.meeting" class="meeting">
-        {{temp.meeting.name}}
+        {{temp.time}}: {{temp.meeting.name}}
       </div>
     </div>
   </div>
