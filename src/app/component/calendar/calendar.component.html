@@ -1,0 +1,14 @@
+<div class="main-content">
+  <div class="days">
+  <div *ngFor="let day of days" class="hours">
+    <p>{{day.date | date: 'EEEE'}}</p>
+    <p>{{day.date | date: 'd'}}</p>
+    <div *ngFor="let temp of day.timestamp" class="blocks">
+      <p>{{temp.time}}</p>
+      <div *ngIf="temp.meeting" class="meeting">
+        {{temp.meeting.name}}
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

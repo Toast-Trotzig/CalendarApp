@@ -1,0 +1,10 @@
+.nav {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+
+.nav-content {
+  height: 100%;
+}
