@@ -27,7 +27,9 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     const today = new Date();
     this.tempday.date = today;
-    const date = new Date();
+    const fday = today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1);
+    const date = new Date(today.setDate(fday));
+    console.log(date);
     const testmeeting = Object.assign({}, this.meeting);
     testmeeting.name = 'test';
     testmeeting.multiplier = 2;
