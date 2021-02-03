@@ -30,8 +30,7 @@ export class CalendarComponent implements OnInit {
     const fday = today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1);
     const date = new Date(today.setDate(fday));
     const testmeeting = Object.assign({}, this.meeting);
-    testmeeting.name = 'test';
-    testmeeting.multiplier = 2;
+    const tstmeeting = Object.assign({}, this.meeting);
 
     for (let i = 0; i < 8; i++) {
       const tmp = JSON.parse(JSON.stringify(this.timestamps));
@@ -41,8 +40,12 @@ export class CalendarComponent implements OnInit {
       this.days.push(temp);
     }
 
-    console.log(this.timestamps);
+    testmeeting.name = 'test';
+    testmeeting.multiplier = 2;
     this.days[2].timestamp[8].meeting = testmeeting;
+    tstmeeting.name = 'Good morning';
+    tstmeeting.multiplier = 1;
+    this.days[4].timestamp[0].meeting = tstmeeting;
     console.log(this.days);
   }
 

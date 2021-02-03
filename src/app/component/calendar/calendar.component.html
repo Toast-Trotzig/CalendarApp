@@ -5,7 +5,7 @@
     <p>{{day.date | date: 'd'}}</p>
     <div *ngFor="let temp of day.timestamp" class="blocks">
       <p>{{temp.time}}</p>
-      <div *ngIf="temp.meeting" class="meeting">
+      <div *ngIf="temp.meeting" class="meeting" style="height: calc(100%*{{temp.meeting.multiplier}})">
         {{temp.time}}: {{temp.meeting.name}}
       </div>
     </div>
