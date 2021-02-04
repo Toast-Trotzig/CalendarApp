@@ -1,3 +1,15 @@
+.nav {
+  display: flex;
+  flex-direction: row;
+  place-content: center flex-start;
+}
+
+.nav-button {
+  margin-left: 3%;
+  height: 60%;
+}
+
+
 .main-content {
   display: flex;
   flex-direction: column;
@@ -11,11 +23,11 @@
 .hours {
   display: flex;
   flex-direction: column;
-  width: calc(100%/7);
+  width: calc(100%/8);
 }
 
 .blocks {
-  min-height: calc(100%/9);
+  min-height: calc(100%/7);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -50,3 +62,25 @@
   place-items: center;
 }
 
+.side-info {
+  width: calc(100%/20);
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+
+.timezone-header {
+  margin-top: calc(100%/1.43);
+  place-self: end;
+}
+
+.timezone-blocks {
+  min-height: calc(100%/7);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  box-sizing: border-box;
+  width: 100%;
+  outline:1px solid lightgray;
+}

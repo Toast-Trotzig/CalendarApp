@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {IDay, IMeeting, ITimestamp} from '../Models/model';
-import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-calendar',
@@ -19,10 +18,13 @@ export class CalendarComponent implements OnInit {
 
   tempday: IDay = {date: null, timestamp: []};
   today: Date = new Date();
+  week: IDay[];
+  startindex = 0;
+  endindex = 8;
 
 
 
-  constructor(public datepipe: DatePipe) { }
+  constructor() { }
 
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class CalendarComponent implements OnInit {
     const testmeeting = Object.assign({}, this.meeting);
     const tstmeeting = Object.assign({}, this.meeting);
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 29; i++) {
       const tmp = JSON.parse(JSON.stringify(this.timestamps));
       const temp = Object.assign({}, this.tempday);
       temp.timestamp = tmp;
@@ -49,6 +51,30 @@ export class CalendarComponent implements OnInit {
     tstmeeting.multiplier = 1;
     this.days[4].timestamp[0].meeting = tstmeeting;
     console.log(this.days);
+
+    this.week = this.days.slice(this.startindex, this.endindex);
+  }
+
+  onTodayClick(): void {
+    this.startindex = 0;
+    this.endindex = 8;
+    this.week = this.days.slice(this.startindex, this.endindex);
+  }
+
+  onBackClick(): void {
+    if (this.startindex !== 0) {
+      this.startindex = this.startindex - 7;
+      this.endindex = this.endindex - 7;
+      this.week = this.days.slice(this.startindex, this.endindex);
+    }
+  }
+
+  onForwardClick(): void {
+    if (this.endindex < 28) {
+      this.startindex = this.startindex + 7;
+      this.endindex = this.endindex + 7;
+      this.week = this.days.slice(this.startindex, this.endindex);
+    }
   }
 
 }
