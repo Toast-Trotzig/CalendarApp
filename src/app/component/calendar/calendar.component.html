@@ -1,3 +1,4 @@
+<div class="content">
 <div class="mat-toolbar">
   <mat-toolbar color="primary" class="nav">
     <button mat-raised-button class="nav-button" (click)="onTodayClick()">
@@ -5,14 +6,17 @@
     </button>
     <button mat-button (click)="onBackClick()"><mat-icon>arrow_back_ios</mat-icon></button>
     <button mat-button (click)="onForwardClick()"><mat-icon>arrow_forward_ios</mat-icon></button>
-    {{week[0].date | date: 'dd MMM'}} - {{week [7].date | date: 'dd MMM YYYY'}}
+    {{week[0].date | date: 'dd MMM'}} - {{week [6].date | date: 'dd MMM YYYY'}}
   </mat-toolbar>
 </div>
 <div class="main-content">
   <div class="days">
     <div class="side-info">
-      <div class="timezone-header"></div>
-      <div *ngFor="let temp of timestamps" class="timezone-blocks">
+      <div class="timezone-header">
+        <p>Timezone</p>
+        <p>GMT +1</p>
+      </div>
+      <div *ngFor="let temp of filteredtimes" class="timezone-blocks">
         {{temp.time}}
       </div>
     </div>
@@ -29,4 +33,5 @@
     </div>
   </div>
   </div>
+</div>
 </div>
