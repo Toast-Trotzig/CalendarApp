@@ -6,7 +6,7 @@ export interface IDay {
 
 export interface ITimestamp {
   time: string;
-  meeting: IMeeting;
+  meeting: IMeeting[];
 }
 
 export interface IMeeting {

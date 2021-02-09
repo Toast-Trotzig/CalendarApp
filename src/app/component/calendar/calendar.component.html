@@ -18,7 +18,7 @@
       <div class="side-info">
         <div class="timezone-header">
           <p>Timezone</p>
-          <p>GMT +1</p>
+          <p>GMT+1</p>
         </div>
         <div *ngFor="let temp of filteredtimes" class="timezone-blocks">
           {{temp.time}}
@@ -30,9 +30,15 @@
           <p>{{day.date | date: 'd'}}</p>
         </div>
         <div *ngFor="let temp of day.timestamp" class="blocks">
-
-          <div *ngIf="temp.meeting" class="meeting" style="height: calc(100%*{{temp.meeting.multiplier}})">
-            {{temp.time}}: {{temp.meeting.name}}
+          <div *ngIf="temp.meeting?.length > 1" class="meeting-container" style="height: calc(100%*{{temp.meeting[0].multiplier}}">
+            <div *ngFor="let tmp of temp.meeting" class="meeting" style="height: calc(100%*{{tmp.multiplier}}); width: calc(100%/{{temp.meeting.length}}">
+            {{temp.time}}: {{tmp.name}}
+            </div>
+          </div>
+          <div *ngIf="temp.meeting?.length === 1" class="meeting-container" style="height: calc(100%*{{temp.meeting[0].multiplier}}">
+            <div *ngFor="let tmp of temp.meeting" class="meeting" style="width: 100%">
+              {{temp.time}}: {{tmp.name}}
+            </div>
           </div>
         </div>
       </div>
