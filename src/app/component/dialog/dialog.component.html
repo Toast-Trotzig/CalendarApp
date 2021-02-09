@@ -1,0 +1,36 @@
+<h1 mat-dialog-title class="title">New event</h1>
+<div Mat-dialog-content>
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="input-content">
+    <mat-form-field class="text-input">
+      <mat-label>Event name</mat-label>
+      <input matInput formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field class="text-input" appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="date" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="text-input">
+      <mat-label>Time</mat-label>
+      <mat-select matNativeControl formControlName="time" required>
+        <mat-option *ngFor="let time of timestamps" [value]="time">
+          {{time}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="text-input">
+      <mat-label>Length of event</mat-label>
+      <mat-select matNativeControl formControlName="length" required>
+        <mat-option value="1">15 min</mat-option>
+        <mat-option value="2">30 min</mat-option>
+        <mat-option value="3">45 min</mat-option>
+        <mat-option value="4">60 min</mat-option>
+        <mat-option value="6">90 min</mat-option>
+        <mat-option value="8">120 min</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!eventForm.valid">Add event</button>
+  </form>
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+</div>

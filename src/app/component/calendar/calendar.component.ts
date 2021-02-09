@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IDay, IMeeting, ITimestamp} from '../Models/model';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogComponent} from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-calendar',
@@ -7,7 +9,6 @@ import {IDay, IMeeting, ITimestamp} from '../Models/model';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-
 
 
   timestamps: ITimestamp[] = [
@@ -33,7 +34,6 @@ export class CalendarComponent implements OnInit {
   filteredtimes: ITimestamp[];
   days: IDay[] = [];
   meeting: IMeeting = {name: null, multiplier: null};
-
   tempday: IDay = {date: null, timestamp: []};
   today: Date = new Date();
   week: IDay[];
@@ -41,31 +41,32 @@ export class CalendarComponent implements OnInit {
   endindex = 7;
 
 
-
-  constructor() { }
+  constructor(public dialog: MatDialog) {
+  }
 
 
   ngOnInit(): void {
     this.filteredtimes = this.timestamps.filter((x, i) => i % 2 === 0);
-    console.log(this.filteredtimes);
     const today = new Date();
-    this.tempday.date = today;
-    console.log(today);
     const fday = today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1);
-    const date = new Date(today.setDate(fday));
+    let date = new Date(today.setDate(fday - 1));
+    const lastdate = new Date();
+    lastdate.setDate(date.getDate() + 27);
     const testmeeting = Object.assign({}, this.meeting);
     const tstmeeting = Object.assign({}, this.meeting);
     const nextweekmeeting = Object.assign({}, this.meeting);
     const meeting = Object.assign({}, this.meeting);
 
-    for (let i = 0; i < 29; i++) {
+    while (date <= lastdate) {
       const tmp = JSON.parse(JSON.stringify(this.timestamps));
       const temp = Object.assign({}, this.tempday);
       temp.timestamp = tmp;
-      temp.date = new Date(temp.date.setDate(date.getDate() + i));
+      temp.date = date;
       this.days.push(temp);
+      date = new Date(date.setDate(date.getDate() + 1));
     }
 
+    console.log(this.days);
     testmeeting.name = 'test';
     testmeeting.multiplier = 2;
     this.days[2].timestamp[14].meeting[0] = testmeeting;
@@ -109,6 +110,23 @@ export class CalendarComponent implements OnInit {
       this.endindex = this.endindex + 7;
       this.week = this.days.slice(this.startindex, this.endindex);
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '50%',
+      data: {name: null, date: null, time: null, length: null}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      const tempmeeting = Object.assign({}, this.meeting);
+      if (result !== null) {
+        tempmeeting.name = result.name;
+        tempmeeting.multiplier = result.length;
+        this.days.find(x => x.date.toDateString() === result.date.toDateString()).
+        timestamp.find(x => x.time === result.time).meeting.push(tempmeeting);
+      }
+    });
   }
 
 }
