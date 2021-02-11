@@ -31,14 +31,25 @@
           <p>{{day.date | date: 'd'}}</p>
         </div>
         <div *ngFor="let temp of day.timestamp" class="blocks">
-          <div *ngIf="temp.meeting?.length === 1" class="meeting-container"
-               style="height: calc(100%*{{temp.meeting[0].multiplier}}">
+          <div *ngIf="temp.meeting?.length === 1 && (!checkLaterMeetings(day, temp) && !checkPreviousMeetings(day, temp))" class="meeting-container">
             <div *ngFor="let tmp of temp.meeting" class="meeting" style="width: 100%">
               {{temp.time}}: {{tmp.name}}
             </div>
           </div>
-          <div *ngIf="temp.meeting?.length > 1" class="meeting-container"
-               style="height: calc(100%*{{temp.meeting[0].multiplier}}">
+          <div *ngIf="temp.meeting?.length > 0 && (checkLaterMeetings(day, temp) || checkPreviousMeetings(day, temp)) && amountPreviousMeetings(day, temp) !== 0" class="meeting-container"
+               style="margin-left: calc(100%/({{amountPreviousMeetings(day, temp) + temp.meeting?.length + amountLaterMeetings(day, temp)}} / {{amountPreviousMeetings(day, temp)}}))">
+            <div *ngFor="let tmp of temp.meeting" class="meeting"
+                 style="height: calc(100%*{{tmp.multiplier}}); width: calc(100%/({{amountPreviousMeetings(day, temp) + amountLaterMeetings(day, temp) + temp.meeting?.length}}))">
+              {{temp.time}}: {{tmp.name}}
+            </div>
+          </div>
+          <div *ngIf="temp.meeting?.length > 0 && (checkLaterMeetings(day, temp) || checkPreviousMeetings(day, temp)) && amountPreviousMeetings(day, temp) === 0" class="meeting-container">
+            <div *ngFor="let tmp of temp.meeting" class="meeting"
+                 style="height: calc(100%*{{tmp.multiplier}}); width: calc(100%/({{amountPreviousMeetings(day, temp) + amountLaterMeetings(day, temp) + temp.meeting?.length}}))">
+              {{temp.time}}: {{tmp.name}}
+            </div>
+          </div>
+          <div *ngIf="temp.meeting?.length > 1  && (!checkLaterMeetings(day, temp) && !checkPreviousMeetings(day, temp))" class="meeting-container">
             <div *ngFor="let tmp of temp.meeting" class="meeting"
                  style="height: calc(100%*{{tmp.multiplier}}); width: calc(100%/{{temp.meeting.length}}">
               {{temp.time}}: {{tmp.name}}

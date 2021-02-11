@@ -123,10 +123,69 @@ export class CalendarComponent implements OnInit {
       if (result !== null) {
         tempmeeting.name = result.name;
         tempmeeting.multiplier = result.length;
-        this.days.find(x => x.date.toDateString() === result.date.toDateString()).
-        timestamp.find(x => x.time === result.time).meeting.push(tempmeeting);
+        this.days.find(x => x.date.toDateString() === result.date.toDateString()).timestamp.find(x => x.time === result.time).meeting.push(tempmeeting);
       }
     });
   }
 
+  amountPreviousMeetings(day: IDay, timestamp: ITimestamp): number {
+
+    let amount = 0;
+    const index = day.timestamp.findIndex(x => x.time === timestamp.time);
+
+    for (let i = 8; i > 0; i--) {
+      const currentindex = index - i;
+      const time = day.timestamp[currentindex];
+      let boo = 0;
+      if (currentindex >= 0 && time.meeting.length > 0) {
+        for (const tmp of time.meeting) {
+          if (tmp.multiplier > i && tmp.multiplier !== 1) {
+            boo = boo + 1;
+          }
+        }
+        if (boo > 0) {
+          amount = amount + time.meeting.length;
+        }
+      }
+    }
+    return amount;
+  }
+
+  amountLaterMeetings(day: IDay, timestamp: ITimestamp): number {
+    let amount = 0;
+    const index = day.timestamp.findIndex(x => x.time === timestamp.time);
+
+
+    for (let i = 1; i < 9; i++) {
+      const currentindex = index + i;
+      const time = day.timestamp[currentindex];
+      if (currentindex < 68 && time.meeting.length > 0) {
+        for (const temp of timestamp.meeting) {
+          if (temp.multiplier > i) {
+            for (const tmp of time.meeting) {
+              amount = amount + 1;
+            }
+          }
+        }
+      }
+    }
+
+    return amount;
+  }
+
+  checkPreviousMeetings(day: IDay, timestamp: ITimestamp): boolean {
+    if (this.amountPreviousMeetings(day, timestamp) !== 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkLaterMeetings(day: IDay, timestamp: ITimestamp): boolean {
+    if (this.amountLaterMeetings(day, timestamp) !== 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
